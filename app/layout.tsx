@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
 import {Toaster} from "sonner"
+import ModalProvider from "@/components/providers/modal-provider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 
 const geistSans = localFont({
@@ -47,15 +49,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ConvexClientProvider>
-          <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="jotion-theme-2">
-            {children}
-            <Toaster position="bottom-center"/>
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="jotion-theme-2">
+              <ModalProvider />
+                {children}
+              <Toaster position="bottom-center"/>
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
